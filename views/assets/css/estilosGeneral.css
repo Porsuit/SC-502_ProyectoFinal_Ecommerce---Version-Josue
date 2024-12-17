@@ -1,0 +1,148 @@
+
+
+body{
+    font-family: 'Inria Serif', serif;
+    font-weight: bold;
+}
+
+.navbar {
+    font-family: 'Inria Serif', serif;
+    font-weight: bold;
+}
+
+.hero-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100vh;
+    padding: 0 5%;
+    background-color: #f8f9fa;
+}
+
+.hero-left {
+    text-align: left;
+    width: 50%;
+}
+
+.hero-title {
+    font-size: 64px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.hero-button {
+    font-size: 18px;
+    padding: 10px 20px;
+    border: none;
+    background-color: #040404;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.hero-button:hover {
+    background-color: #0056b3;
+}
+
+.hero-right img {
+    max-width: 70%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border-radius: 80px 0 80px 0;
+    border: #040404 solid 0.5px;
+}
+
+
+.image-section {
+    display: flex;
+    margin: 20px 5%;
+}
+
+.image-section img {
+    height: 100%;
+    object-fit: cover;
+}
+
+.image-large {
+    width: 75%;
+    margin-right: 10px;
+    height: fit-content;
+}
+
+.image-small {
+    width: 25%;
+}
+
+.card{
+    
+}
+
+
+
+ /* Section Title */
+
+.hogar-section {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    justify-items: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+}
+.hogar-title {
+        font-family: 'Inria Serif', serif;
+        font-size: 36px;
+        font-weight: bold;
+        margin-bottom: 30px;
+}
+
+
+.hogar-image-wrapper {
+    position: relative;
+    width: 80%;
+    height: auto;
+}
+
+.hogar-image {
+    display: block;
+    height: auto;
+}
+
+/* Overlay Rectangle */
+.hogar-overlay {
+    position: absolute;
+    bottom: 70px;
+    left: 70px;
+    background-color: rgba(204, 181, 181, 0.8); 
+    padding: 20px;
+    color: #1c1c1c;
+    font-weight: bold;
+    border-radius: 5px;
+    width: 400px;
+    height: 150px;
+}
+
+.hogar-overlay-title {
+    font-family: 'Inria Serif', serif;
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+/* Button */
+.hogar-overlay-button {
+    display: inline-block;
+    font-size: 18px;
+    padding: 10px 20px;
+    color: white;
+    background-color: #b88e2f;
+    border: none;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.hogar-overlay-button:hover {
+    background-color: #a67c26;
+}

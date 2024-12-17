@@ -1,0 +1,33 @@
+{
+    "es": {
+        "Inicio": "Inicio",
+        "Comprar": "Comprar",
+        "Contacto": "Contacto",
+        "Buscar": "Buscar",
+        "Usuario": "Usuario",
+        "Carrito": "Carrito",
+        "HeroTitle" : "Nueva colección de invierno",
+        "BuyNow" : "Comprar Ahora",
+        "RegistrarUsuario" : "Registrar Usuario",
+        "Name" : "Nombre",        
+        "Email" : "Correo electrónico",
+        "Password" : "Conraseña",
+        "Register" : "Registrar"
+        
+    },
+    "en": {
+        "Inicio": "Home",
+        "Comprar": "Shop",
+        "Contacto": "Contact",
+        "Buscar": "Search",
+        "Usuario": "User",
+        "Carrito": "Cart",
+        "HeroTitle" : "Winter's new collection",
+        "BuyNow" : "Buy Now",
+        "RegistrarUsuario" : "Register User",
+        "Name" : "Name ",        
+        "Email" : "Email",
+        "Password" : "Password",
+        "Register" : "Register"
+    }
+}
