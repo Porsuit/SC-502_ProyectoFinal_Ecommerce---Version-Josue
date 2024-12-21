@@ -1,10 +1,10 @@
 $(function(){
-    $("#addProducto").on("submit",function(event){
+    $("#addOrden").on("submit",function(event){
         event.preventDefault();
-        var formData = new FormData($("#addProducto")[0]);
+        var formData = new FormData($("#addOrden")[0]);
         $.ajax({
             type: "POST",
-            url: "../controllers/inventarioController.php?op=insertar",
+            url: "../controllers/ordenController.php?op=insertar",
             data: formData,
             processData: false,  // Necesario para enviar FormData correctamente
             contentType: false,  // Necesario para enviar FormData correctamente
@@ -12,9 +12,9 @@ $(function(){
             success: function (rsptaAPI) {
                 console.log(rsptaAPI);
                 if(rsptaAPI.status = "OK"){
-                    alert(rsptaAPI.msg + ", producto fue completado")
+                    alert(rsptaAPI.msg + ", orden fue completado")
                 }else{
-                    alert("Lo sentimos, el producto no pudo ser agregado.")
+                    alert("Lo sentimos, la orden no pudo ser agregado.")
                 }
             },
             error: function(xhr, status){
@@ -25,12 +25,12 @@ $(function(){
 });
 
 $(function(){
-    $("#editProducto").on("submit",function(event){
+    $("#editOrden").on("submit",function(event){
         event.preventDefault();
-        var formData = new FormData($("#addProducto")[0]);
+        var formData = new FormData($("#addOrden")[0]);
         $.ajax({
             type: "PUT",
-            url: "../controllers/inventarioController.php?op=insertar",
+            url: "../controllers/ordenController.php?op=insertar",
             data: formData,
             processData: false,  // Necesario para enviar FormData correctamente
             contentType: false,  // Necesario para enviar FormData correctamente
@@ -38,9 +38,9 @@ $(function(){
             success: function (rsptaAPI) {
                 console.log(rsptaAPI);
                 if(rsptaAPI.status = "OK"){
-                    alert(rsptaAPI.msg + ", producto fue completado")
+                    alert(rsptaAPI.msg + ", orden fue completado")
                 }else{
-                    alert("Lo sentimos, el producto no pudo ser agregado.")
+                    alert("Lo sentimos, la orden no pudo ser agregado.")
                 }
             },
             error: function(xhr, status){
@@ -51,12 +51,12 @@ $(function(){
 });
 
 $(function(){
-    $("#deleteProducto").on("submit",function(event){
+    $("#deleteOrden").on("submit",function(event){
         event.preventDefault();
-        var formData = new FormData($("#addProducto")[0]);
+        var formData = new FormData($("#addOrden")[0]);
         $.ajax({
             type: "DELETE",
-            url: "../controllers/inventarioController.php?op=eliminarProducto",
+            url: "../controllers/ordenController.php?op=eliminarOrden",
             data: formData,
             processData: false,  // Necesario para enviar FormData correctamente
             contentType: false,  // Necesario para enviar FormData correctamente
@@ -64,9 +64,9 @@ $(function(){
             success: function (rsptaAPI) {
                 console.log(rsptaAPI);
                 if(rsptaAPI.status = "OK"){
-                    alert(rsptaAPI.msg + ", producto fue completado")
+                    alert(rsptaAPI.msg + ", orden fue completado")
                 }else{
-                    alert("Lo sentimos, el producto no pudo ser agregado.")
+                    alert("Lo sentimos, la orden no pudo ser agregado.")
                 }
             },
             error: function(xhr, status){
