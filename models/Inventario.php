@@ -9,6 +9,7 @@ class Producto extends Conexion
 		private $nombreProducto=null;
 		private $precio= null;
         private $inventario=null;
+        private $imagen_url;
 
     /*Contructores de la Clase*/
         public function __construct(){}
@@ -47,6 +48,14 @@ class Producto extends Conexion
         {
             $this->inventario = $inventario;
         }
+        public function getImagenUrl()
+        {
+            return $this->imagen_url;
+        }
+        public function setInventario($imagen_url)
+        {
+            $this->imagen_url = $imagen_url;
+        }
 
     /*Metodos de la Clase*/
         public static function getConexion(){
@@ -70,7 +79,8 @@ class Producto extends Conexion
                     $product->setCodigo($encontrado['codigo']);
                     $product->setNombreProducto($encontrado['nombreProducto']);
                     $product->setPrecio($encontrado['precio']);
-                    $product->setInventario($encontrado['Inventario']);
+                    $product->setInventario($encontrado['inventario']);
+                    $product->setImagenUrl($encontrado['imagen_url']);
                     $arr[] = $product;
                 }
                 return $arr;
@@ -103,7 +113,7 @@ class Producto extends Conexion
         }
         /*Guarda un producto en el inventario*/
         public function guardarEnDb(){
-            $query = "INSERT INTO `productos`(`nombreProducto`, `precio`,`inventario`) VALUES (:nombreProducto,:precio,:inventario)";
+            $query = "INSERT INTO `productos`(`nombreProducto`, `precio`,`inventario`,`imagen_url`) VALUES (:nombreProducto,:precio,:inventario,:imagen_url)";
          try {
              self::getConexion();
              $nombreProducto=strtoupper($this->getNombreProducto());
@@ -114,6 +124,7 @@ class Producto extends Conexion
             $resultado->bindParam(":nombreProducto",$nombreProducto,PDO::PARAM_STR);
             $resultado->bindParam(":precio",$precio,PDO::PARAM_INT);
             $resultado->bindParam(":inventario",$inventario,PDO::PARAM_INT);
+            $resultado->bindParam(":imagen_url",$inventario,PDO::PARAM_STR);
                 $resultado->execute();
                 self::desconectar();
                } catch (PDOException $Exception) {
@@ -121,46 +132,6 @@ class Producto extends Conexion
                    $error = "Error ".$Exception->getCode( ).": ".$Exception->getMessage( );;
                  return json_encode($error);
                }
-        }
-        /*Activa un producto en el inventario*/
-        public function activar(){
-            $codigo = $this->getCodigo();
-            $query = "UPDATE productos SET estado='1' WHERE codigo=:codigo";
-           try {
-             self::getConexion();
-              $resultado = self::$cnx->prepare($query);
-              $resultado->bindParam(":codigo",$codigo,PDO::PARAM_INT);
-              self::$cnx->beginTransaction();//desactiva el autocommit
-              $resultado->execute();
-              self::$cnx->commit();//realiza el commit y vuelve al modo autocommit
-              self::desconectar();
-              return $resultado->rowCount();
-             } catch (PDOException $Exception) {
-               self::$cnx->rollBack();
-               self::desconectar();
-               $error = "Error ".$Exception->getCode().": ".$Exception->getMessage();
-               return $error;
-             }
-        }
-        /*Desactiva un producto en el inventario*/
-        public function desactivar(){
-            $codigo = $this->getCodigo();
-            $query = "UPDATE productos SET estado='0' WHERE codigo=:codigo ";
-            try {
-            self::getConexion();
-            $resultado = self::$cnx->prepare($query);
-            $resultado->bindParam(":codigo",$codigo,PDO::PARAM_INT);
-            self::$cnx->beginTransaction();//desactiva el autocommit
-            $resultado->execute();
-            self::$cnx->commit();//realiza el commit y vuelve al modo autocommit
-            self::desconectar();
-            return $resultado->rowCount();
-            } catch (PDOException $Exception) {
-            self::$cnx->rollBack();
-            self::desconectar();
-            $error = "Error ".$Exception->getCode().": ".$Exception->getMessage();
-            return $error;
-            }
         }
         /*Muestra el precio de un producto en el inventario*/
         public static function mostrar($precio){
@@ -200,7 +171,7 @@ class Producto extends Conexion
         }
         /*Actualiza la informacion de un producto en el inventario*/
         public function actualizarProducto(){
-            $query = "update productos set nombreProducto=:nombreProducto,precio=:precio,inventario=:inventario where codigo=:codigo and nombreProducto=:nombreProducto";
+            $query = "UPDATE productos SET nombreProducto=:nombreProducto,precio=:precio,inventario=:inventario where codigo=:codigo and nombreProducto=:nombreProducto";
             try {
                 self::getConexion();
                 $codigo=$this->getCodigo();
@@ -208,6 +179,7 @@ class Producto extends Conexion
                 $precio=$this->getPrecio();
                 $inventario=$this->getInventario();
                 $resultado = self::$cnx->prepare($query);
+                $resultado->bindParam(":imagen_url",$imagen_url,PDO::PARAM_STR);
                 $resultado->bindParam(":inventario",$inventario,PDO::PARAM_INT);
                 $resultado->bindParam(":precio",$precio,PDO::PARAM_INT);
                 $resultado->bindParam(":nombreProducto",$nombreProducto,PDO::PARAM_STR);
@@ -226,7 +198,7 @@ class Producto extends Conexion
         }
         /*Verifica la existencia de un productos en el inventario*/
         public function verificarExistenciaNombreProducto(){
-            $query = "SELECT nombreProducto,codigo,precio,inventario FROM productos where nombreProducto=:nombreProducto and estado =1";
+            $query = "SELECT nombreProducto,codigo,precio,inventario,imagen_url FROM productos where nombreProducto=:nombreProducto and estado =1";
             try {
             self::getConexion();
             $resultado = self::$cnx->prepare($query);		
@@ -249,24 +221,24 @@ class Producto extends Conexion
             }
         }
         /*Elimina un producto en el inventario*/
-        public function eliminarProducto(){
-            $query = "delete productos where codigo=:codigo and nombreProducto=:nombreProducto";
+        public function eliminarProducto() {
+            $query = "DELETE FROM productos WHERE codigo = :codigo";
             try {
                 self::getConexion();
-                $codigo=$this->getCodigo();
-                $nombreProducto=$this->getNombreProducto();
-                $precio=$this->getPrecio();
+                $codigo = $this->getCodigo(); // Asumiendo que tienes un método para obtener el código del producto
                 $resultado = self::$cnx->prepare($query);
-                self::$cnx->beginTransaction();//desactiva el autocommit
+                $resultado->bindParam(":codigo", $codigo, PDO::PARAM_INT);
+                
+                self::$cnx->beginTransaction(); // Desactiva el autocommit
                 $resultado->execute();
-                self::$cnx->commit();//realiza el commit y vuelve al modo autocommit
+                self::$cnx->commit(); // Realiza el commit y vuelve al modo autocommit
                 self::desconectar();
-                return $resultado->rowCount();
+                return $resultado->rowCount(); // Retorna el número de filas afectadas
             } catch (PDOException $Exception) {
-                self::$cnx->rollBack();
+                self::$cnx->rollBack(); // Revierte la transacción en caso de error
                 self::desconectar();
-                $error = "Error ".$Exception->getCode().": ".$Exception->getMessage();
-                return $error;
+                $error = "Error " . $Exception->getCode() . ": " . $Exception->getMessage();
+                return $error; // Retorna el mensaje de error
             }
         }
 }
